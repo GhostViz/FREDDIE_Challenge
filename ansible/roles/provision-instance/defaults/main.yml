@@ -1,0 +1,7 @@
+aws_instance_type: t2.micro
+aws_image_id: ami-00eeedc4036573771 # Ubuntu, 22.04 LTS
+#aws_image_id: ami-0cc87e5027adcdca8 # Amazon Linux 2 
+aws_region: us-east-2
+aws_security_group: freddie-challenge
+aws_tag: freddie-challenge
+aws_key_name: freddie-challenge

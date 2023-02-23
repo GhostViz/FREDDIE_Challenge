@@ -1,0 +1,15 @@
+- name: check that a page returns a status 200
+  ansible.builtin.uri:
+    url: "https://{{ hostvars[inventory_hostname]['public_ip_address'] }}"
+    return_content: yes
+    validate_certs: no
+  register: this
+  failed_when: "'Hello World!' not in this.content"
+
+- name: check that http redirects to https
+  ansible.builtin.uri:
+    url: "http://{{ hostvars[inventory_hostname]['public_ip_address'] }}"
+    return_content: yes
+    validate_certs: no
+  register: this
+  failed_when: "'https' not in this.url"

@@ -1,0 +1,8 @@
+--- 
+- hosts: tag_environment_freddie_challenge
+  become: yes
+  remote_user: ubuntu
+  gather_facts: yes
+  #remote_user: ec2-user
+  roles:
+    - verify

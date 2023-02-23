@@ -1,0 +1,7 @@
+- name: check that a page returns a status 200
+  ansible.builtin.uri:
+    url: http://www.example.com
+    return_content: yes
+    validate_certs: no
+  register: this
+  failed_when: "'AWESOME' not in this.content"

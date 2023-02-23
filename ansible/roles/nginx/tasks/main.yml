@@ -1,0 +1,38 @@
+- name: install nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: create certs directory
+  ansible.builtin.file:
+    path: /etc/nginx/certs
+    state: directory
+    mode: '0755'
+
+- name: create private key
+  community.crypto.openssl_privatekey:
+    path: /etc/nginx/certs/certificate.key
+
+- name: create self-signed certificate
+  community.crypto.x509_certificate:
+    path: /etc/nginx/certs/certificate.crt
+    privatekey_path: /etc/nginx/certs/certificate.key
+    provider: selfsigned
+    
+- name: start and enable nginx
+  ansible.builtin.service:
+    name: nginx
+    enabled: yes
+    state: started
+
+- name: copy index.html
+  ansible.builtin.copy:
+    src: files/index.html
+    dest: /var/www/html/index.html
+  notify: "reload nginx"
+
+- name: copy default site config
+  ansible.builtin.copy:
+    src: files/default
+    dest: /etc/nginx/sites-available/default
+  notify: "reload nginx"
